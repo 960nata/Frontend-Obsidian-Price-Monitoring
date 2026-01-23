@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../../hooks/useTranslation';
 
 export const Hero = () => {
+  const { t } = useTranslation();
+  
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 overflow-hidden">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-neon-mint/5 rounded-full blur-[120px] -z-10"></div>
@@ -9,18 +12,17 @@ export const Hero = () => {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-neon-mint animate-pulse"></span>
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-neon-mint/80">
-            Quantum Tracking Active
+            {t('landing.quantumTracking')}
           </span>
         </div>
         
         <h1 className="text-6xl md:text-8xl lg:text-[110px] font-extrabold leading-[0.95] tracking-tighter mb-8 neon-glow-text">
-          UNRIVALED <br />
-          <span className="text-neon-mint">MARKET VISION.</span>
+          {t('landing.heroTitle1')} <br />
+          <span className="text-neon-mint">{t('landing.heroTitle2')}</span>
         </h1>
         
         <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-12">
-          The definitive pricing intelligence suite for Indonesian marketplaces. 
-          Experience real-time telemetry across Shopee, Tokopedia, and Lazada.
+          {t('landing.heroSubtitle')}
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
@@ -28,13 +30,13 @@ export const Hero = () => {
             to="/register"
             className="neon-border-glow bg-neon-mint text-obsidian px-10 py-5 rounded-sm text-sm font-black uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95"
           >
-            Establish Link
+            {t('landing.establishLink')}
           </Link>
           <Link
             to="/login"
             className="px-10 py-5 rounded-sm text-sm font-black uppercase tracking-[0.2em] border border-white/10 hover:border-white/20 transition-all bg-white/5"
           >
-            View Systems
+            {t('landing.viewSystems')}
           </Link>
         </div>
         
@@ -80,11 +82,11 @@ export const Hero = () => {
                 notifications_active
               </span>
               <span className="text-[10px] font-black uppercase tracking-widest text-neon-mint">
-                Alert Triggered
+                {t('landing.alertTriggered')}
               </span>
             </div>
             <p className="text-xs text-slate-300 font-medium leading-relaxed">
-              Price deviation detected in Competitor A (-12%)
+              {t('landing.priceDeviation')}
             </p>
           </div>
         </div>

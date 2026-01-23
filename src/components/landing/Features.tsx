@@ -1,3 +1,5 @@
+import { useTranslation } from '../../hooks/useTranslation';
+
 interface Feature {
   icon: string;
   title: string;
@@ -13,33 +15,36 @@ interface FeaturesProps {
   features?: Feature[];
 }
 
-const defaultFeatures: Feature[] = [
-  {
-    icon: 'radar',
-    title: 'Omni-Channel Surveillance',
-    description: 'Automatically crawl thousands of product listings every minute. Our proprietary engine bypasses anti-bot measures to deliver the most accurate market landscape in Indonesia.',
-    items: [
-      'Real-time Price Indexing',
-      'Stock Level Monitoring',
-      'Buy-box Prediction AI'
-    ],
-    imageIcon: 'grid_view'
-  },
-  {
-    icon: 'hub',
-    title: 'Dynamic Alert Protocol',
-    description: 'Never miss a movement. Receive instant encrypted notifications via WhatsApp, Telegram, or Webhook as soon as your competitive threshold is breached.',
-    imageIcon: 'dynamic_feed',
-    reverse: true,
-    linkText: 'Explore Alert Engine',
-    linkHref: '#'
-  }
-];
-
-export const Features = ({ features = defaultFeatures }: FeaturesProps) => {
+export const Features = ({ features }: FeaturesProps) => {
+  const { t } = useTranslation();
+  
+  const defaultFeatures: Feature[] = [
+    {
+      icon: 'radar',
+      title: t('landing.feature1Title'),
+      description: t('landing.feature1Desc'),
+      items: [
+        t('landing.feature1Item1'),
+        t('landing.feature1Item2'),
+        t('landing.feature1Item3')
+      ],
+      imageIcon: 'grid_view'
+    },
+    {
+      icon: 'hub',
+      title: t('landing.feature2Title'),
+      description: t('landing.feature2Desc'),
+      imageIcon: 'dynamic_feed',
+      reverse: true,
+      linkText: t('landing.feature2Link'),
+      linkHref: '#'
+    }
+  ];
+  
+  const displayFeatures = features || defaultFeatures;
   return (
     <section className="max-w-7xl mx-auto py-32 space-y-48 px-6">
-      {features.map((feature, index) => (
+      {displayFeatures.map((feature, index) => (
         <div
           key={index}
           className={`flex flex-col md:flex-row items-center gap-24 ${

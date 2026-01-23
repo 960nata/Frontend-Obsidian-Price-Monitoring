@@ -6,6 +6,7 @@ import { Product, Marketplace } from '../../types/product.types';
 import { formatCurrency } from '../../utils/formatters';
 import { AddProductModal } from '../../components/products/AddProductModal';
 import { useTranslation } from '../../hooks/useTranslation';
+import { Skeleton } from '../../components/common/Skeleton';
 
 const marketplaceColors: Record<Marketplace, string> = {
   [Marketplace.TOKOPEDIA]: 'bg-[#ed4d2d]',
@@ -56,7 +57,7 @@ export default function Products() {
   });
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this product?')) {
+    if (confirm(t('products.deleteConfirm'))) {
       deleteMutation.mutate(id);
     }
   };
@@ -76,8 +77,36 @@ export default function Products() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-white">Loading...</div>
+      <div className="space-y-6">
+        {/* Page Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <Skeleton variant="text" width="30%" height={48} className="mb-2" />
+            <Skeleton variant="text" width="50%" height={18} />
+          </div>
+          <Skeleton variant="rectangular" width={140} height={40} />
+        </div>
+
+        {/* Filters */}
+        <div className="flex items-center gap-4 mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} variant="rectangular" width={100} height={36} />
+          ))}
+        </div>
+
+        {/* Product Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-white/5 backdrop-blur-xl border border-white/5 rounded-sm overflow-hidden">
+              <Skeleton variant="rectangular" width="100%" height={200} />
+              <div className="p-4 space-y-3">
+                <Skeleton variant="text" width="80%" height={18} />
+                <Skeleton variant="text" width="60%" height={14} />
+                <Skeleton variant="text" width="40%" height={20} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -161,7 +190,7 @@ export default function Products() {
               return (
                 <div
                   key={product.id}
-                  className="glass-panel group rounded-xl overflow-hidden border border-white/10 hover:border-primary transition-all flex flex-col"
+                  className="bg-white/5 backdrop-blur-xl border border-white/5 group rounded-sm overflow-hidden hover:border-neon-mint/30 transition-all flex flex-col"
                 >
                   <div className="relative aspect-square overflow-hidden bg-slate-900/50">
                     {product.imageUrl ? (
@@ -198,7 +227,7 @@ export default function Products() {
                       {product.name}
                     </h3>
                     <p className="text-slate-500 text-[10px] mb-3">
-                      Updated {new Date(product.updatedAt).toLocaleDateString()}
+                      {t('products.updated')} {new Date(product.updatedAt).toLocaleDateString()}
                     </p>
                     <div className="mt-auto flex items-end justify-between">
                       <div>

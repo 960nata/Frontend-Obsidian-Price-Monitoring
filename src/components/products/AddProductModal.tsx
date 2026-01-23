@@ -48,27 +48,24 @@ export const AddProductModal = ({ isOpen, onClose, onSubmit, isLoading }: AddPro
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian-black/80 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-2xl obsidian-glass rounded-xl overflow-hidden shadow-2xl">
-        {/* Neon Accent Border Top */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-primary shadow-[0_0_15px_#0df2a6]"></div>
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div className="relative w-full max-w-2xl bg-white/5 backdrop-blur-xl border border-white/5 rounded-sm overflow-hidden shadow-2xl">
         {/* Modal Header */}
-        <div className="p-8 pb-4">
-          <div className="flex justify-between items-start mb-2">
+        <div className="p-8 pb-6 border-b border-white/5">
+          <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-black text-white tracking-tight leading-none mb-2">
+              <h1 className="text-4xl font-extrabold text-white tracking-tighter mb-3 neon-glow-text">
                 {t('modal.monitorProduct')}
               </h1>
-              <p className="text-primary/70 text-sm font-light">
+              <p className="text-lg text-slate-400 font-light leading-relaxed">
                 {t('modal.description')}
               </p>
             </div>
             <button
               onClick={handleClose}
-              className="text-white/40 hover:text-white transition-colors"
+              className="text-slate-400 hover:text-white transition-colors"
             >
-              <span className="material-symbols-outlined">close</span>
+              <span className="material-symbols-outlined text-2xl">close</span>
             </button>
           </div>
         </div>
@@ -76,8 +73,8 @@ export const AddProductModal = ({ isOpen, onClose, onSubmit, isLoading }: AddPro
         {/* Modal Body */}
         <form onSubmit={handleSubmit(handleFormSubmit)} className="px-8 pb-8 space-y-8">
           {/* Marketplace Selection */}
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">
+          <div className="space-y-4">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
               {t('modal.marketplace')}
             </label>
             <div className="grid grid-cols-4 gap-3">
@@ -86,13 +83,13 @@ export const AddProductModal = ({ isOpen, onClose, onSubmit, isLoading }: AddPro
                   key={marketplace.value}
                   type="button"
                   onClick={() => setSelectedMarketplace(marketplace.value)}
-                  className={`flex flex-col items-center justify-center gap-2 p-4 rounded-lg border transition-all group ${
+                  className={`flex flex-col items-center justify-center gap-2 p-4 rounded-sm border transition-all group ${
                     selectedMarketplace === marketplace.value
-                      ? 'bg-primary/10 border-primary text-primary shadow-[inset_0_0_10px_rgba(13,242,166,0.1)] tab-active'
-                      : 'bg-white/5 border-white/10 text-white/40 hover:border-primary/40 hover:text-white'
+                      ? 'bg-neon-mint/10 border-neon-mint/50 text-neon-mint shadow-[0_0_15px_rgba(0,255,204,0.2)]'
+                      : 'bg-white/5 border-white/5 text-slate-400 hover:border-neon-mint/30 hover:text-white'
                   }`}
                 >
-                  <span className="material-symbols-outlined text-3xl group-hover:text-primary transition-colors">
+                  <span className="material-symbols-outlined text-3xl group-hover:text-neon-mint transition-colors">
                     {marketplace.icon}
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-wider">
@@ -104,62 +101,61 @@ export const AddProductModal = ({ isOpen, onClose, onSubmit, isLoading }: AddPro
           </div>
 
           {/* URL Input */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex justify-between items-end">
-              <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
                 {t('modal.productLink')}
               </label>
-              <span className="flex items-center gap-1 text-[10px] text-primary">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5">
+                <span className="w-1.5 h-1.5 rounded-full bg-neon-mint animate-pulse"></span>
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-neon-mint/80">
+                  {t('modal.scanning')}
                 </span>
-                {t('modal.scanning')}
               </span>
             </div>
             <div className="relative">
               <input
                 {...register('competitorUrl')}
-                className="w-full bg-obsidian-black border border-white/10 rounded-lg px-4 py-4 text-white placeholder:text-white/20 focus:ring-0 focus:border-primary focus:shadow-[0_0_15px_rgba(13,242,166,0.2)] transition-all outline-none font-light"
+                className="w-full bg-white/5 border border-white/5 rounded-sm px-4 py-4 text-white placeholder:text-white/20 focus:ring-0 focus:border-neon-mint/50 focus:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all outline-none font-light"
                 placeholder="https://www.tokopedia.com/store/product-id..."
                 type="text"
               />
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/40">
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neon-mint/40">
                 <span className="material-symbols-outlined">link</span>
               </div>
             </div>
             {errors.competitorUrl && (
-              <p className="text-red-400 text-xs">{errors.competitorUrl.message as string}</p>
+              <p className="text-red-400 text-xs font-light">{errors.competitorUrl.message as string}</p>
             )}
           </div>
 
           {/* Product Name */}
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">
+          <div className="space-y-4">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
               {t('modal.productName')}
             </label>
             <input
               {...register('name')}
-              className="w-full bg-obsidian-black border border-white/10 rounded-lg px-4 py-4 text-white placeholder:text-white/20 focus:ring-0 focus:border-primary transition-all outline-none"
+              className="w-full bg-white/5 border border-white/5 rounded-sm px-4 py-4 text-white placeholder:text-white/20 focus:ring-0 focus:border-neon-mint/50 transition-all outline-none"
               placeholder="Enter product name..."
               type="text"
             />
             {errors.name && (
-              <p className="text-red-400 text-xs">{errors.name.message as string}</p>
+              <p className="text-red-400 text-xs font-light">{errors.name.message as string}</p>
             )}
           </div>
 
           {/* Grid Inputs */}
           <div className="grid grid-cols-2 gap-6">
             {/* Target Price */}
-            <div className="space-y-3">
-              <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">
+            <div className="space-y-4">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
                 Target Price (Optional)
               </label>
               <div className="relative">
                 <input
                   {...register('targetPrice', { valueAsNumber: true })}
-                  className="w-full bg-obsidian-black border border-white/10 rounded-lg px-4 py-4 text-white focus:ring-0 focus:border-primary transition-all outline-none"
+                  className="w-full bg-white/5 border border-white/5 rounded-sm px-4 py-4 text-white focus:ring-0 focus:border-neon-mint/50 transition-all outline-none"
                   type="number"
                   placeholder="0"
                 />
@@ -171,26 +167,23 @@ export const AddProductModal = ({ isOpen, onClose, onSubmit, isLoading }: AddPro
           <input type="hidden" {...register('marketplace')} value={selectedMarketplace} />
 
           {/* Modal Footer */}
-          <div className="pt-4 flex gap-4">
+          <div className="pt-6 flex gap-4">
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 py-4 px-6 border border-primary/30 text-primary font-bold text-sm tracking-widest rounded-lg hover:bg-primary/5 transition-all uppercase"
+              className="flex-1 py-4 px-6 bg-white/5 border border-white/10 text-white font-black text-sm tracking-[0.2em] rounded-sm hover:border-neon-mint/30 hover:bg-white/10 transition-all uppercase"
             >
               {t('modal.abort')}
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="flex-[2] py-4 px-6 bg-primary text-obsidian-black font-black text-sm tracking-widest rounded-lg hover:shadow-[0_0_25px_rgba(13,242,166,0.6)] active:scale-95 transition-all uppercase disabled:opacity-50"
+              className="flex-[2] py-4 px-6 neon-border-glow bg-neon-mint text-obsidian font-black text-sm tracking-[0.2em] rounded-sm hover:scale-105 active:scale-95 transition-all uppercase disabled:opacity-50"
             >
               {isLoading ? t('common.loading') : t('modal.initialize')}
             </button>
           </div>
         </form>
-
-        {/* Bottom Scanning Texture */}
-        <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
       </div>
     </div>
   );

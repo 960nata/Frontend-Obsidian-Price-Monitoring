@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '../../services/api';
+import { SkeletonAdminDashboard } from '../../components/common/Skeleton';
 
 export default function AdminDashboard() {
   const { data: analytics, isLoading } = useQuery({
@@ -11,29 +12,44 @@ export default function AdminDashboard() {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SkeletonAdminDashboard />;
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="mb-12">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tighter mb-4 neon-glow-text">
+          Admin Dashboard
+        </h1>
+        <p className="text-lg text-slate-400 font-light leading-relaxed max-w-2xl">
+          System overview & analytics
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">Total Users</div>
-          <div className="text-3xl font-bold">{analytics?.totalUsers || 0}</div>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/5 p-6 rounded-sm hover:border-neon-mint/30 transition-all">
+          <div className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-3">Total Users</div>
+          <div className="text-4xl font-extrabold text-neon-mint neon-glow-text tracking-tighter">
+            {analytics?.totalUsers || 0}
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">Total Products</div>
-          <div className="text-3xl font-bold">{analytics?.totalProducts || 0}</div>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/5 p-6 rounded-sm hover:border-blue-500/30 transition-all">
+          <div className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-3">Total Products</div>
+          <div className="text-4xl font-extrabold text-blue-400 tracking-tighter">
+            {analytics?.totalProducts || 0}
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">Total Alerts</div>
-          <div className="text-3xl font-bold">{analytics?.totalAlerts || 0}</div>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/5 p-6 rounded-sm hover:border-yellow-500/30 transition-all">
+          <div className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-3">Total Alerts</div>
+          <div className="text-4xl font-extrabold text-yellow-400 tracking-tighter">
+            {analytics?.totalAlerts || 0}
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="text-sm text-gray-600 mb-1">Success Rate</div>
-          <div className="text-3xl font-bold">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/5 p-6 rounded-sm hover:border-green-500/30 transition-all">
+          <div className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-3">Success Rate</div>
+          <div className="text-4xl font-extrabold text-green-400 tracking-tighter">
             {analytics?.successRate?.toFixed(1) || 0}%
           </div>
         </div>

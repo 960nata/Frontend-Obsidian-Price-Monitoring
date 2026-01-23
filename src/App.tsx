@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuthStore } from './store/auth.store';
+import { useGoogleAnalytics, trackPageView } from './hooks/useGoogleAnalytics';
 
 // Public pages
 import Landing from './pages/public/Landing';
@@ -29,6 +31,7 @@ import Settings from './pages/dashboard/Settings';
 // Admin pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminPricing from './pages/admin/AdminPricing';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 
 // Superadmin pages
@@ -46,10 +49,28 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
 };
 
+// Component to track page views
+function PageViewTracker() {
+  const location = useLocation();
+  const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const gaEnabled = import.meta.env.VITE_GA_ENABLED === 'true' && !!gaMeasurementId;
+
+  useGoogleAnalytics(gaEnabled ? gaMeasurementId : undefined);
+
+  React.useEffect(() => {
+    if (gaEnabled) {
+      trackPageView(location.pathname + location.search);
+    }
+  }, [location, gaEnabled]);
+
+  return null;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <PageViewTracker />
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Landing />} />
@@ -137,6 +158,16 @@ function App() {
               <PrivateRoute>
                 <Layout>
                   <AdminUsers />
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/pricing"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <AdminPricing />
                 </Layout>
               </PrivateRoute>
             }

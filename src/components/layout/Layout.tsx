@@ -9,10 +9,18 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
-  const isDashboard = location.pathname === '/dashboard';
+  
+  // Check if current route is a dashboard route (protected pages)
+  const isDashboardRoute = 
+    location.pathname.startsWith('/dashboard') ||
+    location.pathname.startsWith('/products') ||
+    location.pathname.startsWith('/alerts') ||
+    location.pathname.startsWith('/settings') ||
+    location.pathname.startsWith('/admin') ||
+    location.pathname.startsWith('/superadmin');
 
-  // Dashboard tidak pakai header/footer home page
-  if (isDashboard) {
+  // Dashboard routes tidak pakai header/footer home page
+  if (isDashboardRoute) {
     return <DashboardLayout>{children}</DashboardLayout>;
   }
 

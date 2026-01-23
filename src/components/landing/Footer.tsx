@@ -1,3 +1,5 @@
+import { useTranslation } from '../../hooks/useTranslation';
+
 interface FooterLink {
   label: string;
   href: string;
@@ -14,43 +16,48 @@ interface FooterProps {
   bottomLinks?: FooterLink[];
 }
 
-const defaultSections: FooterSection[] = [
-  {
-    title: 'Interface',
-    links: [
-      { label: 'Dashboard', href: '/dashboard' },
-      { label: 'Terminal', href: '/terminal' },
-      { label: 'Analytics', href: '/analytics' }
-    ]
-  },
-  {
-    title: 'Protocols',
-    links: [
-      { label: 'Security', href: '/security' },
-      { label: 'Integration', href: '/integration' },
-      { label: 'Status', href: '/status' }
-    ]
-  },
-  {
-    title: 'Registry',
-    links: [
-      { label: 'About', href: '/about' },
-      { label: 'Legal', href: '/legal' },
-      { label: 'Contact', href: '/contact' }
-    ]
-  }
-];
-
-const defaultBottomLinks: FooterLink[] = [
-  { label: 'Terminal Log', href: '#' },
-  { label: 'Privacy Ops', href: '#' }
-];
-
 export const Footer = ({
-  sections = defaultSections,
-  copyright = '© 2024 Obsidian Intelligence Systems Group.',
-  bottomLinks = defaultBottomLinks
+  sections,
+  copyright,
+  bottomLinks
 }: FooterProps) => {
+  const { t } = useTranslation();
+  
+  const defaultSections: FooterSection[] = [
+    {
+      title: t('footer.interface'),
+      links: [
+        { label: t('common.dashboard'), href: '/dashboard' },
+        { label: 'Terminal', href: '/terminal' },
+        { label: 'Analytics', href: '/analytics' }
+      ]
+    },
+    {
+      title: t('footer.protocols'),
+      links: [
+        { label: 'Security', href: '/security' },
+        { label: 'Integration', href: '/integration' },
+        { label: 'Status', href: '/status' }
+      ]
+    },
+    {
+      title: t('footer.registry'),
+      links: [
+        { label: 'About', href: '/about' },
+        { label: 'Legal', href: '/legal' },
+        { label: 'Contact', href: '/contact' }
+      ]
+    }
+  ];
+
+  const defaultBottomLinks: FooterLink[] = [
+    { label: t('footer.terminalLog'), href: '#' },
+    { label: t('footer.privacyOps'), href: '#' }
+  ];
+  
+  const displaySections = sections || defaultSections;
+  const displayCopyright = copyright || t('footer.copyright');
+  const displayBottomLinks = bottomLinks || defaultBottomLinks;
   return (
     <footer className="border-t border-white/5 py-24 px-6 bg-obsidian">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-20">
@@ -64,12 +71,12 @@ export const Footer = ({
             <span className="text-lg font-black uppercase tracking-tighter">HargaCerdas</span>
           </div>
           <p className="text-slate-500 text-sm leading-relaxed">
-            Platform kecerdasan harga terdepan untuk retailer berkecepatan tinggi di Asia Tenggara.
+            {t('footer.description')}
           </p>
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-16">
-          {sections.map((section, index) => (
+          {displaySections.map((section, index) => (
             <div key={index} className="space-y-6">
               <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-neon-mint">
                 {section.title}
@@ -92,9 +99,9 @@ export const Footer = ({
       </div>
       
       <div className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">
-        <p>{copyright}</p>
+        <p>{displayCopyright}</p>
         <div className="flex gap-8">
-          {bottomLinks.map((link, index) => (
+          {displayBottomLinks.map((link, index) => (
             <a
               key={index}
               href={link.href}

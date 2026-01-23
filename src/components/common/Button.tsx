@@ -13,12 +13,12 @@ export const Button = ({
   className = '',
   ...props
 }: ButtonProps) => {
-  const baseClasses = 'px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'px-6 py-3 rounded-sm text-sm font-black uppercase tracking-[0.2em] transition-all disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
+    primary: 'neon-border-glow bg-neon-mint text-obsidian hover:scale-105 active:scale-95',
+    secondary: 'bg-white/5 border border-white/10 text-white hover:border-neon-mint/30 hover:bg-white/10',
+    danger: 'bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30 hover:border-red-500/50',
   };
 
   return (

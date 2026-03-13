@@ -69,7 +69,7 @@ function PageViewTracker() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <PageViewTracker />
         <Routes>
           {/* Public routes */}
